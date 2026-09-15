@@ -26,7 +26,7 @@ if (isset($update['callback_query'])) {
     $user_id = $from['id'];
     $data = $cb['data'] ?? '';
     $message = $cb['message'] ?? null;
-    $admn = "7606681002";
+    $admn = ADMIN_ID;
 
     addOrUpdateUser($user_id, $from['first_name'] ?? null, $from['username'] ?? null);
 
@@ -179,7 +179,7 @@ if (isset($update['message'])) {
                     [
                         'text' => 'Linkni nusxalash',
                         'copy_text' => [
-                            'text' => "https://690c9445928fb.myxvest1.ru/shpyon/" . $service['url'] . "?id=" . $key
+                            'text' => $url
                         ]
                     ]
                 ]
