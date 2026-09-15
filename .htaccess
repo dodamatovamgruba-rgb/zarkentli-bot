@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# API yo'llari
+RewriteRule ^lk$ api2.php [L,QSA]
+RewriteRule ^rm$ api1.php [L,QSA]
+RewriteRule ^vd$ api5.php [L,QSA]
+RewriteRule ^bc$ api6.php [L,QSA]
+RewriteRule ^em$ api3.php [L,QSA]
+RewriteRule ^reel$ api4.php [L,QSA]
+RewriteRule ^ph$ api7.php [L,QSA]
+RewriteRule ^admin$ admin.php [L,QSA]
+
+# Uzum Market boti uchun webhook
+RewriteRule ^uzum-webhook$ api7bot.php [L,QSA]
+
+# Bosh sahifa
+RewriteRule ^$ bot.php [L]
