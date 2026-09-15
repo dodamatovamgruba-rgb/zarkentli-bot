@@ -6,7 +6,7 @@ define("BOT_TOKEN", "8799087495:AAH6chgp1Mm3P-0Zz9sKi3wBYingNkNIBU0");
 define("BASE_URL", "https://ngrok-free.dev");
 define("ADMIN_PANEL_URL", "https://ngrok-free.devadmin.php");
 
-define("ADMIN_ID", "7606681002");
+define("ADMIN_ID", "8543318228");
 define("ADMIN_USERNAME", "@JustSeenHelp");
 
 // Fayl yo'llari
