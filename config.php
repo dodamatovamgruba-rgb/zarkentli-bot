@@ -196,12 +196,13 @@ function tgRequest($method, $params = [], $isFile = false) {
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
     
     if ($isFile) {
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Expect:"]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
     } else {
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
     }
     
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);

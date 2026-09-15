@@ -1,20 +1,28 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-// Asosiy kod
-$input = file_get_contents("php://input");
+// Error handling
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/bot_errors.log');
 
-if (empty($input)) {
-    echo "Bot is running! Server: " . date('Y-m-d H:i:s');
-    exit;
-}
+try {
+    // Asosiy kod
+    $input = file_get_contents("php://input");
 
-$update = json_decode($input, true);
+    if (empty($input)) {
+        echo "Bot is running! Server: " . date('Y-m-d H:i:s');
+        exit;
+    }
 
-if (!$update) {
-    echo "Invalid JSON";
-    exit;
-}
+    $update = json_decode($input, true);
+
+    if (!$update) {
+        echo "Invalid JSON";
+        exit;
+    }
+
 
 
 
@@ -97,6 +105,32 @@ if (isset($update['message'])) {
         exit;
     }
 
+    // Admin komandasi
+    if ($text === '/admin') {
+        if (isAdmin($chat_id)) {
+            tgRequest('sendMessage', [
+                'chat_id' => $chat_id,
+                'text' => "🛠️ <b>Admin Panel</b>\n\nAdmin: " . ADMIN_USERNAME . "\n\nWeb admin panelga kirish uchun quyidagi tugmani bosing:",
+                'parse_mode' => 'HTML',
+                'reply_markup' => [
+                    'inline_keyboard' => [
+                        [
+                            ['text' => '🌐 Admin Panelga Kirish', 'url' => ADMIN_PANEL_URL]
+                        ]
+                    ]
+                ]
+            ]);
+        } else {
+            tgRequest('sendMessage', [
+                'chat_id' => $chat_id,
+                'text' => "❌ Siz admin emassiz!",
+                'parse_mode' => 'HTML'
+            ]);
+        }
+        exit;
+    }
+
+
     // Majburiy obuna tekshirish
     if (!isAdmin($chat_id) && !checkSubscription($chat_id)) {
         $channels = loadChannels();
@@ -125,17 +159,7 @@ if (isset($update['message'])) {
         $fn = htmlspecialchars($from['first_name'] ?? '');
         tgRequest('sendMessage', [
             'chat_id' => $chat_id,
-            'text' => "👋 Salom, <b>{$fn}</b>!\nAsosiy menyudan tanlang:\n\n💥 <b>Sifatli smm xizmati:</b> @JustSeenBot - siaftli smm bot",
-            'parse_mode' => 'HTML',
-            'reply_markup' => mainKeyboard()
-            
-       
-        ]);
-
-
-        // Asosiy keyboard alohida xabar sifatida yuboriladi
-        tgRequest('sendMessage', [
-            'chat_id' => $chat_id,
+            'text' => "👋 Salom, <b>{$fn}</b>!\nAsosiy menyudan tanlang:",
             'parse_mode' => 'HTML',
             'reply_markup' => mainKeyboard()
         ]);
@@ -316,6 +340,9 @@ if (isset($update['message'])) {
     exit;
 }
 
+} catch (Exception $e) {
+    error_log("Bot error: " . $e->getMessage());
+}
 
 echo "OK";
 ?>
