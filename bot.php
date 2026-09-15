@@ -235,6 +235,36 @@ if (isset($update['message'])) {
         exit;
     }
 
+    if ($text === '📊 Statistika') {
+        $msg = buildAccountText($chat_id);
+        tgRequest('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => "📊 <b>Statistika</b>\n\n" . $msg,
+            'parse_mode' => 'HTML',
+            'reply_markup' => mainKeyboard()
+        ]);
+        exit;
+    }
+
+    if ($text === '❓ Yordam') {
+        tgRequest('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => "<b>❓ Yordam</b>\n\nBotdan foydalanish:\n\n1. 🔐 <b>Xizmatlar</b> - Turli xizmatlarni tanlash\n2. 📊 <b>Statistika</b> - Sizning statistikangizni ko'rish\n3. 💼 <b>Hisobim</b> - Hisob ma'lumotlarini ko'rish\n4. ❗️ <b>Qoidalar</b> - Bot qoidalarini o'qish\n5. 📞 <b>Bog'lanish</b> - Admin bilan bog'lanish\n\nSavollar uchun: " . ADMIN_USERNAME,
+            'parse_mode' => 'HTML',
+            'reply_markup' => mainKeyboard()
+        ]);
+        exit;
+    }
+
+    if ($text === '🔙 Orqaga') {
+        tgRequest('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => "Asosiy menyuga qaytdingiz. Tanlang:",
+            'parse_mode' => 'HTML',
+            'reply_markup' => mainKeyboard()
+        ]);
+        exit;
+    }
 
 
 

@@ -321,8 +321,12 @@ function mainKeyboard() {
                 ['text' => '📊 Statistika']
             ],
             [
-                ['text' => '❓ Yordam'],
-                ['text' => '⚙️ Sozlamalar']
+                ['text' => '💼 Hisobim'],
+                ['text' => '❓ Yordam']
+            ],
+            [
+                ['text' => '❗️ Qoidalar'],
+                ['text' => '📞 Bog\'lanish']
             ]
         ],
         'resize_keyboard' => true,
